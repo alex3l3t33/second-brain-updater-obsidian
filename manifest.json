@@ -1,7 +1,7 @@
 {
   "id": "second-brain-updater",
   "name": "Second Brain Updater",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "minAppVersion": "1.6.0",
   "description": "Connect ChatGPT to approved vault folders with scoped reads, previewed updates, backups, and conflict protection.",
   "author": "Alexandre Charbit",

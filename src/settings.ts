@@ -31,7 +31,7 @@ export class SecondBrainSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
     new Setting(containerEl)
-      .setName("Second Brain Updater")
+      .setName("Connection status")
       .setHeading();
 
     const status = containerEl.createDiv({ cls: "obsidian-second-brain-status" });
