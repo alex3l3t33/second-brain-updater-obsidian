@@ -1,4 +1,4 @@
-import type { App, EventRef, TAbstractFile, TFile } from "obsidian";
+import type { App, EventRef, TAbstractFile, TFile, TFolder } from "obsidian";
 import type { SearchEntry } from "./types.js";
 import { isPathAllowed } from "./security.js";
 
@@ -19,6 +19,14 @@ function excerpt(content: string, needle: string): string {
   const start = Math.max(0, idx >= 0 ? idx - 120 : 0);
   const end = Math.min(content.length, start + 320);
   return content.slice(start, end).replace(/\s+/g, " ").trim();
+}
+
+function isMarkdownFile(file: TAbstractFile): file is TFile {
+  return "extension" in file && (file as TFile).extension === "md";
+}
+
+function isFolder(file: TAbstractFile): file is TFolder {
+  return "children" in file;
 }
 
 export class SearchIndex {
@@ -56,8 +64,8 @@ export class SearchIndex {
   }
 
   private async onCreateOrModify(file: TAbstractFile): Promise<void> {
-    if (!("extension" in file) || (file as TFile).extension !== "md") return;
-    const note = file as TFile;
+    if (!isMarkdownFile(file)) return;
+    const note = file;
     if (!isPathAllowed(note.path, this.allowedRoots, this.internalRoot)) {
       this.entries.delete(note.path);
       return;
@@ -74,11 +82,30 @@ export class SearchIndex {
 
   async rebuild(): Promise<void> {
     this.entries.clear();
-    const files = this.app.vault.getMarkdownFiles().filter(file => isPathAllowed(file.path, this.allowedRoots, this.internalRoot));
+    const files = this.collectAllowedMarkdownFiles();
     const concurrency = 8;
     for (let i = 0; i < files.length; i += concurrency) {
       await Promise.all(files.slice(i, i + concurrency).map(file => this.onCreateOrModify(file)));
     }
+  }
+
+  private collectAllowedMarkdownFiles(): TFile[] {
+    const files = new Map<string, TFile>();
+    const visit = (entry: TAbstractFile): void => {
+      if (isFolder(entry)) {
+        for (const child of entry.children) visit(child);
+        return;
+      }
+      if (isMarkdownFile(entry) && isPathAllowed(entry.path, this.allowedRoots, this.internalRoot)) {
+        files.set(entry.path, entry);
+      }
+    };
+
+    for (const root of this.allowedRoots) {
+      const entry = this.app.vault.getAbstractFileByPath(root);
+      if (entry) visit(entry);
+    }
+    return [...files.values()];
   }
 
   search(query: string, folder: string | undefined, limit: number): Array<{

@@ -94,13 +94,7 @@ export class SecondBrainSettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("Bridge token")
-      .setDesc("Use this as OBSIDIAN_BRIDGE_TOKEN for the local MCP bridge. Keep it secret.")
-      .addButton(button => button
-        .setButtonText("Copy token")
-        .onClick(async () => {
-          await navigator.clipboard.writeText(this.plugin.settings.token);
-          new Notice("Second Brain Updater token copied");
-        }))
+      .setDesc("Local MCP bridge credential. Keep it secret and rotate it if exposure is suspected.")
       .addButton(button => button
         .setButtonText("Rotate")
         .setWarning()
@@ -112,7 +106,7 @@ export class SecondBrainSettingTab extends PluginSettingTab {
 
     const token = containerEl.createDiv({ cls: "obsidian-second-brain-token" });
     const suffix = this.plugin.settings.token.slice(-6);
-    token.setText(`Token configured: ••••••${suffix}`);
+    token.setText(`Token configured (ending in ${suffix})`);
 
     new Setting(containerEl)
       .setName("Staged change lifetime")
