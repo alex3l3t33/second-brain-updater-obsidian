@@ -1,0 +1,22 @@
+{
+  "name": "second-brain-updater",
+  "version": "0.3.6",
+  "private": true,
+  "author": "MyPlusApps",
+  "type": "module",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "node esbuild.config.mjs && tsc -p tsconfig.json --noEmit",
+    "dev": "node esbuild.config.mjs --watch",
+    "test": "vitest run"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "builtin-modules": "^4.0.0",
+    "esbuild": "^0.28.2",
+    "obsidian": "^1.8.7",
+    "typescript": "^5.8.3",
+    "vitest": "^5.1.0"
+  }
+}

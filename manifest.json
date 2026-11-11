@@ -1,0 +1,10 @@
+{
+  "id": "second-brain-updater",
+  "name": "Second Brain Updater",
+  "version": "0.3.6",
+  "minAppVersion": "1.6.0",
+  "description": "Connect ChatGPT to approved vault folders with scoped reads, previewed updates, backups, and conflict protection.",
+  "author": "MyPlusApps",
+  "authorUrl": "https://myplusapps.fr",
+  "isDesktopOnly": true
+}
