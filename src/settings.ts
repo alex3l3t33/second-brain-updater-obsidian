@@ -30,7 +30,9 @@ export class SecondBrainSettingTab extends PluginSettingTab {
   override display(): void {
     const { containerEl } = this;
     containerEl.empty();
-    containerEl.createEl("h2", { text: "Second Brain Updater" });
+    new Setting(containerEl)
+      .setName("Second Brain Updater")
+      .setHeading();
 
     const status = containerEl.createDiv({ cls: "obsidian-second-brain-status" });
     status.createEl("strong", { text: this.plugin.bridgeRunning ? "Bridge running" : "Bridge stopped" });
@@ -120,7 +122,9 @@ export class SecondBrainSettingTab extends PluginSettingTab {
           }
         }));
 
-    containerEl.createEl("h3", { text: "Public ChatGPT marketplace connection" });
+    new Setting(containerEl)
+      .setName("Public ChatGPT marketplace connection")
+      .setHeading();
 
     new Setting(containerEl)
       .setName("Relay service URL")
