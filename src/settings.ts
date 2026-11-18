@@ -171,7 +171,7 @@ export class SecondBrainSettingTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName("Support Second Brain Updater")
+      .setName("Support")
       .setHeading();
 
     new Setting(containerEl)
