@@ -3,6 +3,10 @@ import type SecondBrainPlugin from "./main.js";
 import type { AutomationPolicy, SecondBrainSettings } from "./types.js";
 import { normalizeAllowedRoots } from "./security.js";
 
+const KO_FI_URL = "https://ko-fi.com/alexandre42682";
+const SUPPORT_MESSAGE =
+  "If Second Brain Updater has earned a place in your workflow, thank you — your appreciation means a lot and helps support its continued development.";
+
 export const DEFAULT_SETTINGS: SecondBrainSettings = {
   bridgeEnabled: true,
   port: 27123,
@@ -164,6 +168,20 @@ export class SecondBrainSettingTab extends PluginSettingTab {
           } catch (error) {
             new Notice(error instanceof Error ? error.message : "Pairing failed");
           }
+        }));
+
+    new Setting(containerEl)
+      .setName("Support Second Brain Updater")
+      .setHeading();
+
+    new Setting(containerEl)
+      .setName("Support Second Brain Updater")
+      .setDesc(SUPPORT_MESSAGE)
+      .addButton(button => button
+        .setButtonText("Support on Ko-fi")
+        .setCta()
+        .onClick(() => {
+          window.open(KO_FI_URL, "_blank", "noopener,noreferrer");
         }));
   }
 }

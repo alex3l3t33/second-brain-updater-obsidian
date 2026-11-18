@@ -39,6 +39,10 @@ The plugin contains no advertising, client-side telemetry, analytics, or payment
 - Internal change-set and backup folders cannot be exposed as approved note roots.
 - Deletion is not available.
 
+## Support
+
+If Second Brain Updater has earned a place in your workflow, thank you — your appreciation means a lot and helps support its continued development. You can [support the project on Ko-fi](https://ko-fi.com/alexandre42682).
+
 ## Development
 
 ```bash
